@@ -19,8 +19,11 @@ namespace BumblePux.Rebound.UserInput
 
         public override bool Clicked()
         {
-            if (eventSystem.IsPointerOverGameObject())
-                return false;
+            if (eventSystem != null)
+            {
+                if (eventSystem.IsPointerOverGameObject())
+                    return false;
+            }
 
             return Input.GetMouseButtonDown((int)mouseButton);
         }
