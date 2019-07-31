@@ -23,12 +23,18 @@ namespace BumblePux.Rebound.General
         public TMP_InputField maxSpeedInput;
         public TMP_Text speedValueText;
         public TMP_Text maxSpeedValueText;
+        public Button changeDirectionButton;
+        public Button attemptChangeButton;
 
         private void Start()
         {
             useMaxSpeedToggle.isOn = rotator.UseMaxSpeed;
             speedValueText.text = "Speed: " + rotator.Speed.ToString();
             maxSpeedValueText.text = "Max Speed: " + rotator.MaxSpeed.ToString();
+
+            useMaxSpeedToggle.onValueChanged.AddListener(UpdateMaxSpeedToggle);
+            changeDirectionButton.onClick.AddListener(rotator.ChangeDirection);
+            attemptChangeButton.onClick.AddListener(rotator.AttemptChangeDirection);
         }
 
         public void UpdateSpeed(string valueText)
@@ -49,8 +55,9 @@ namespace BumblePux.Rebound.General
             maxSpeedValueText.text = "Max Speed: " + rotator.MaxSpeed.ToString();
         }
 
-        public void UpdateText(bool blank)
+        public void UpdateMaxSpeedToggle(bool toggle)
         {
+            rotator.UseMaxSpeed = toggle;
             speedValueText.text = "Speed: " + rotator.Speed.ToString();
             maxSpeedValueText.text = "Max Speed: " + rotator.MaxSpeed.ToString();
         }
