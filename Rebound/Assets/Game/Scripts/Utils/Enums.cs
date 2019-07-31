@@ -19,5 +19,12 @@ namespace BumblePux.Rebound.Utils
             Clockwise,
             AntiClockwise
         }
+
+        public enum MouseButton
+        {
+            LeftClick,
+            RightClick,
+            MiddleMouse
+        }
     }
 }
