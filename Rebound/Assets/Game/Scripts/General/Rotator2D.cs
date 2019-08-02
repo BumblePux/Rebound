@@ -82,17 +82,6 @@ namespace BumblePux.Rebound.General
                 direction = Enums.Rotation.Clockwise;
         }
 
-        //----------------------------------------
-        public void AttemptChangeDirection()
-        {
-            int doChangeDirection = UnityEngine.Random.Range(0, 2);
-
-            if (doChangeDirection == 1)
-            {
-                ChangeDirection();
-            }
-        }
-
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Unity Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
