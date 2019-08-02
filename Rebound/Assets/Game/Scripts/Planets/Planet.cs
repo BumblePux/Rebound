@@ -14,7 +14,7 @@ namespace BumblePux.Rebound.Planets
 {
     public class Planet : MonoBehaviour
     {
-        [SerializeField] private Sprite[] planetSprites;
+        [SerializeField] private Sprite[] planetSprites = default;
 
         private SpriteRenderer sr;
 
