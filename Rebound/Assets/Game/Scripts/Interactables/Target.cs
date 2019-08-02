@@ -9,6 +9,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace BumblePux.Rebound.Interactables
 {
@@ -16,6 +17,8 @@ namespace BumblePux.Rebound.Interactables
     {
         [Range(0, 120)]
         [SerializeField] private int moveLimit = 90;
+
+        public UnityEvent OnInteracted;
 
         private Rigidbody2D rb2d;
 
@@ -25,6 +28,8 @@ namespace BumblePux.Rebound.Interactables
         public override void Interact()
         {
             MoveToRandomPosition();
+
+            OnInteracted.Invoke();
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

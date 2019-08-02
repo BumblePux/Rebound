@@ -34,7 +34,7 @@ namespace BumblePux.Rebound.General
 
             useMaxSpeedToggle.onValueChanged.AddListener(UpdateMaxSpeedToggle);
             changeDirectionButton.onClick.AddListener(rotator.ChangeDirection);
-            attemptChangeButton.onClick.AddListener(rotator.AttemptChangeDirection);
+            //attemptChangeButton.onClick.AddListener(rotator.AttemptChangeDirection);
         }
 
         public void UpdateSpeed(string valueText)

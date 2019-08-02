@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BumblePux.Rebound.UserInput;
 using BumblePux.Rebound.Interactables;
+using BumblePux.Rebound.General;
 using UnityEngine.Events;
 
 namespace BumblePux.Rebound.Player
@@ -20,11 +21,47 @@ namespace BumblePux.Rebound.Player
         public BaseUserInput input;
         public UnityEvent OnNoInteractableClicked;
 
+        private Rotator2D rotator;
+        private SpriteRenderer sr;
+        private Transform trail;
         private BaseInteractable interactable;
+
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        // Public Methods
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        public void SetupPlayer(float startSpeed, float maxSpeed, bool useMaxSpeed)
+        {
+            rotator.Speed = startSpeed;
+            rotator.MaxSpeed = maxSpeed;
+            rotator.UseMaxSpeed = useMaxSpeed;
+        }
+
+        //----------------------------------------
+        public void ReactToTargetHit(float speedChange)
+        {
+            rotator.Speed += speedChange;
+
+            if (AttemptChangeDirection())
+            {
+                rotator.ChangeDirection();
+                sr.flipY = !sr.flipY;
+
+                Vector3 trailPos = trail.localPosition;
+                trail.localPosition = new Vector3(0f, trailPos.y * -1, 0f);
+            }
+        }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Unity Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        private void Awake()
+        {
+            rotator = GetComponent<Rotator2D>();
+            sr = GetComponentInChildren<SpriteRenderer>();
+            trail = GetComponentInChildren<TrailRenderer>().gameObject.GetComponent<Transform>();
+        }
+
+        //----------------------------------------
         private void Update()
         {
             if (input.Clicked())
@@ -53,6 +90,20 @@ namespace BumblePux.Rebound.Player
         private void OnTriggerExit2D(Collider2D collision)
         {
             interactable = null;
+        }
+
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        // Private Methods
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        private bool AttemptChangeDirection()
+        {
+            int doChangeDirection = UnityEngine.Random.Range(0, 2);
+
+            if (doChangeDirection == 1)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
