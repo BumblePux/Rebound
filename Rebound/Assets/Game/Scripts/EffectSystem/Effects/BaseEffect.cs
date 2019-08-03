@@ -14,6 +14,9 @@ namespace BumblePux.Rebound.EffectSystem
 {
     public abstract class BaseEffect : MonoBehaviour
     {
+        [SerializeField] protected string popupString = "";
+        [SerializeField] protected bool showPopupOnActivation = true;
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Properties
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
