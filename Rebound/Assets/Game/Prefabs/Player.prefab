@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 920639252054905132}
   - component: {fileID: 920639252054905128}
   - component: {fileID: 920639252054905135}
+  - component: {fileID: 8692625740415127497}
+  - component: {fileID: 9061793375330154395}
+  - component: {fileID: 8978928702354198642}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -104,6 +107,50 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &8692625740415127497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920639252054905043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9570ccaf098a4fb43b902058e1783a70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupString: Speed Lowered
+  showPopupOnActivation: 1
+  speedDownAmount: 50
+--- !u!114 &9061793375330154395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920639252054905043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4caba6dec0d60949a1071788fc66312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupString: Speed Jump!
+  showPopupOnActivation: 1
+  speedUpAmount: 50
+--- !u!114 &8978928702354198642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920639252054905043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eeab3eca8f024e42b1cdd14bb8f4080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupString: Speed Change Frozen
+  showPopupOnActivation: 1
 --- !u!1 &920639252417639037
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +220,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 376953611
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0abbe757246ffb34ca4b48accf2bea39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
