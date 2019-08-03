@@ -17,19 +17,23 @@ namespace BumblePux.Rebound.EffectSystem
         [SerializeField] protected string popupString = "";
         [SerializeField] protected bool showPopupOnActivation = true;
 
+        private bool canBePlayed = true;
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Properties
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public bool IsRunning { get; private set; }
+        public static bool IsRunning { get; private set; }
+        public bool CanBePlayed { get { return canBePlayed; } protected set { canBePlayed = value; } }
+        public string PopupString { get { return popupString; } }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public void TriggerEffect(float duration)
+        public IEnumerator TriggerEffect(float duration)
         {
             IsRunning = true;
 
-            StartCoroutine(Effect(duration));
+            yield return StartCoroutine(Effect(duration));
 
             IsRunning = false;
         }
