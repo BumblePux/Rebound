@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9570ccaf098a4fb43b902058e1783a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popupString: Speed Lowered
+  showPopupOnActivation: 1
   speedDownAmount: 50
 --- !u!114 &9061793375330154395
 MonoBehaviour:
@@ -132,6 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4caba6dec0d60949a1071788fc66312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popupString: Speed Jump!
+  showPopupOnActivation: 1
   speedUpAmount: 50
 --- !u!114 &8978928702354198642
 MonoBehaviour:
@@ -145,6 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eeab3eca8f024e42b1cdd14bb8f4080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  popupString: Speed Change Frozen
+  showPopupOnActivation: 1
 --- !u!1 &920639252417639037
 GameObject:
   m_ObjectHideFlags: 0
