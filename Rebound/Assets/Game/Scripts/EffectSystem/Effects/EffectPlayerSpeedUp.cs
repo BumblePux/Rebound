@@ -36,6 +36,7 @@ namespace BumblePux.Rebound.EffectSystem
             }
             else
             {
+                CanBePlayed = false;
                 yield return null;
             }
         }
