@@ -13,6 +13,9 @@ using BumblePux.Rebound.Player;
 using BumblePux.Rebound.Interactables;
 using BumblePux.Rebound.Score;
 using BumblePux.Rebound.Timer;
+using BumblePux.Rebound.EffectSystem;
+
+using UnityEngine.SceneManagement;
 
 namespace BumblePux.Rebound.GameControllers
 {
@@ -29,6 +32,13 @@ namespace BumblePux.Rebound.GameControllers
         [SerializeField] private float maxSpeed = 600f;
         [SerializeField] private float speedStep = 10f;
 
+        [Header("Effect Settings")]
+        [SerializeField] private int minScoreToStartEffects = 10;
+        [SerializeField] private int triggerEffectAfterXPoints = 8;
+
+        [Header("References")]
+        [SerializeField] private GameObject gameOverCanvas;
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // References
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,12 +46,22 @@ namespace BumblePux.Rebound.GameControllers
         private Target target;
         private SimpleScoreHandler score;
         private SimpleCountdownTimer timer;
+        private EffectController effects;
+
+
+        //TEST ONLY - REMOVE THIS!!!
+        public void RestartGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Override Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         public override void GameStart()
         {
+            gameOverCanvas.SetActive(false);
+
             timer.StartTime = startTime;
             player.SetupPlayer(startSpeed, maxSpeed, true);
 
@@ -52,6 +72,8 @@ namespace BumblePux.Rebound.GameControllers
         public override void GameOver()
         {
             isGameOver = true;
+
+            gameOverCanvas.SetActive(true);
         }
 
         //----------------------------------------
@@ -74,6 +96,12 @@ namespace BumblePux.Rebound.GameControllers
 
             // Update player
             player.ReactToTargetHit(speedStep);
+
+            // Attempt to trigger effect
+            if (score.GetCurrentScore() >= minScoreToStartEffects && score.GetCurrentScore() % triggerEffectAfterXPoints == 0)
+            {
+                effects.TriggerRandomEffect();
+            }
         }
 
         //----------------------------------------
@@ -95,6 +123,7 @@ namespace BumblePux.Rebound.GameControllers
             target = FindObjectOfType<Target>();
             score = FindObjectOfType<SimpleScoreHandler>();
             timer = FindObjectOfType<SimpleCountdownTimer>();
+            effects = FindObjectOfType<EffectController>();
         }
 
         //----------------------------------------
