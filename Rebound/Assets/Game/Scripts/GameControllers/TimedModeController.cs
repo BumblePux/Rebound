@@ -37,7 +37,7 @@ namespace BumblePux.Rebound.GameControllers
         [SerializeField] private int triggerEffectAfterXPoints = 8;
 
         [Header("References")]
-        [SerializeField] private GameObject gameOverCanvas;
+        [SerializeField] private GameObject gameOverCanvas = default;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // References
