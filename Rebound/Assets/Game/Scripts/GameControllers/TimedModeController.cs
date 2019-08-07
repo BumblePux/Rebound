@@ -37,7 +37,9 @@ namespace BumblePux.Rebound.GameControllers
         [SerializeField] private int triggerEffectAfterXPoints = 8;
 
         [Header("References")]
-        [SerializeField] private GameObject gameOverCanvas;
+        [SerializeField] private GameObject gameOverCanvas = default;
+        [SerializeField] private GameObject scoreUICanvas = default;
+        [SerializeField] private GameObject timerUICanvas = default;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // References
@@ -61,6 +63,8 @@ namespace BumblePux.Rebound.GameControllers
         public override void GameStart()
         {
             gameOverCanvas.SetActive(false);
+            scoreUICanvas.SetActive(true);
+            timerUICanvas.SetActive(true);
 
             timer.StartTime = startTime;
             player.SetupPlayer(startSpeed, maxSpeed, true);
@@ -73,7 +77,14 @@ namespace BumblePux.Rebound.GameControllers
         {
             isGameOver = true;
 
+            // Reset player to starting speed
+            player.SetupPlayer(startSpeed, maxSpeed, true);
+
+            target.gameObject.SetActive(false);
+
             gameOverCanvas.SetActive(true);
+            scoreUICanvas.SetActive(false);
+            timerUICanvas.SetActive(false);
         }
 
         //----------------------------------------
