@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using BumblePux.Rebound.Audio;
 
 namespace BumblePux.Rebound.Interactables
 {
@@ -17,6 +18,7 @@ namespace BumblePux.Rebound.Interactables
     {
         [Range(0, 120)]
         [SerializeField] private int moveLimit = 90;
+        [SerializeField] private AudioClip onInteractedClip = default;
 
         public UnityEvent OnInteracted;
 
@@ -28,6 +30,9 @@ namespace BumblePux.Rebound.Interactables
         public override void Interact()
         {
             MoveToRandomPosition();
+
+            if (onInteractedClip != null)
+                AudioManager.PlaySfx(onInteractedClip);
 
             OnInteracted.Invoke();
         }
