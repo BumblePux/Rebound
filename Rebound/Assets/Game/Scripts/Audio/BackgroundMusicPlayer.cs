@@ -15,6 +15,8 @@ namespace BumblePux.Rebound.Audio
     public class BackgroundMusicPlayer : MonoBehaviour
     {
         [SerializeField] private AudioClip backgroundClip = default;
+        [Range(0f, 1f)]
+        [SerializeField] private float volume = 0.8f;
         [SerializeField] private bool playOnSceneLoad = default;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,6 +33,8 @@ namespace BumblePux.Rebound.Audio
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         private void Start()
         {
+            AudioManager.SetMusicVolume(volume);
+
             if (playOnSceneLoad)
                 PlayBackgroundMusic();
         }
