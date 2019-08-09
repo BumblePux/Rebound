@@ -40,9 +40,15 @@ namespace BumblePux.Rebound.Interactables
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Unity Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private void Start()
+        private void Awake()
         {
-            rb2d = GetComponent<Rigidbody2D>();
+            rb2d = GetComponent<Rigidbody2D>();            
+        }
+
+        //----------------------------------------
+        private void OnEnable()
+        {
+            MoveToRandomPosition();
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
