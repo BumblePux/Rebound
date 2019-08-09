@@ -43,8 +43,6 @@ namespace BumblePux.Rebound.Interactables
         private void Start()
         {
             rb2d = GetComponent<Rigidbody2D>();
-
-            MoveToRandomPosition();
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

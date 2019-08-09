@@ -37,7 +37,7 @@ namespace BumblePux.Rebound.Planets
         }
 
         //----------------------------------------
-        private void OnEnable()
+        private void Start()
         {
             ShowRandomPlanet();
         }
