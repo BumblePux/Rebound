@@ -13,6 +13,7 @@ using BumblePux.Rebound.Player;
 using BumblePux.Rebound.Interactables;
 using BumblePux.Rebound.Score;
 using BumblePux.Rebound.Timer;
+using BumblePux.Rebound.Planets;
 using BumblePux.Rebound.EffectSystem;
 
 using UnityEngine.SceneManagement;
@@ -21,6 +22,19 @@ namespace BumblePux.Rebound.GameControllers
 {
     public class TimedModeController : BaseGameController
     {
+        [Header("Game References")]
+        [SerializeField] private PlayerController player = default;
+        [SerializeField] private Target target = default;
+        [SerializeField] private SimpleScoreHandler score = default;
+        [SerializeField] private SimpleCountdownTimer timer = default;
+        [SerializeField] private EffectController effects = default;
+        [SerializeField] private Planet planet = default;
+
+        [Header("Canvas References")]
+        [SerializeField] private GameObject gameOverCanvas = default;
+        [SerializeField] private GameObject scoreUICanvas = default;
+        [SerializeField] private GameObject timerUICanvas = default;
+
         [Header("Timer Settings")]
         [SerializeField] private float startTime = 20f;
         [SerializeField] private float timeBonus = 2f;
@@ -36,32 +50,13 @@ namespace BumblePux.Rebound.GameControllers
         [SerializeField] private int minScoreToStartEffects = 10;
         [SerializeField] private int triggerEffectAfterXPoints = 8;
 
-        [Header("References")]
-        [SerializeField] private GameObject gameOverCanvas = default;
-        [SerializeField] private GameObject scoreUICanvas = default;
-        [SerializeField] private GameObject timerUICanvas = default;
-
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        // References
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private PlayerController player;
-        private Target target;
-        private SimpleScoreHandler score;
-        private SimpleCountdownTimer timer;
-        private EffectController effects;
-
-
-        //TEST ONLY - REMOVE THIS!!!
-        public void RestartGame()
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Override Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         public override void GameStart()
         {
+            SetPrefabsActive(true);
+
             gameOverCanvas.SetActive(false);
             scoreUICanvas.SetActive(true);
             timerUICanvas.SetActive(true);
@@ -76,6 +71,8 @@ namespace BumblePux.Rebound.GameControllers
         public override void GameOver()
         {
             isGameOver = true;
+
+            SetPrefabsActive(false);
 
             // Reset player to starting speed
             player.SetupPlayer(startSpeed, maxSpeed, true);
@@ -128,16 +125,6 @@ namespace BumblePux.Rebound.GameControllers
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Unity Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private void Awake()
-        {
-            player = FindObjectOfType<PlayerController>();
-            target = FindObjectOfType<Target>();
-            score = FindObjectOfType<SimpleScoreHandler>();
-            timer = FindObjectOfType<SimpleCountdownTimer>();
-            effects = FindObjectOfType<EffectController>();
-        }
-
-        //----------------------------------------
         private void OnEnable()
         {
             player.OnNoInteractableClicked.AddListener(TargetMissed);
@@ -153,15 +140,16 @@ namespace BumblePux.Rebound.GameControllers
             timer.OnCountdownComplete.RemoveListener(GameOver);
         }
 
-        //----------------------------------------
-        private void Start()
-        {
-            GameStart();
-        }
-
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Private Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+        private void SetPrefabsActive(bool active)
+        {
+            target.gameObject.SetActive(active);
+            score.gameObject.SetActive(active);
+            timer.gameObject.SetActive(active);
+            effects.gameObject.SetActive(active);
+            planet.gameObject.SetActive(active);
+        }
     }
 }
