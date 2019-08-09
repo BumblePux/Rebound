@@ -9,6 +9,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BumblePux.Rebound.GameControllers;
 
 namespace BumblePux.Rebound.UI
 {
@@ -17,6 +18,8 @@ namespace BumblePux.Rebound.UI
         public Animator buttonsAnimator;
         public Animator playButtonAnimator;
         public Animator titleTextAnimator;
+
+        public BaseGameController controller;
 
         private bool isMenuOpen = false;
         private bool isGameStarted = false;
@@ -107,6 +110,10 @@ namespace BumblePux.Rebound.UI
             titleTextAnimator.SetBool("startGame", true);
             playButtonAnimator.SetBool("startGame", true);
             buttonsAnimator.SetBool("startGame", true);
+
+            yield return StartCoroutine(WaitForButtonAnimationFinished());
+
+            controller.GameStart();
         }
 
         //----------------------------------------
