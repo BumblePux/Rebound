@@ -14,10 +14,9 @@ namespace BumblePux.Rebound.GameControllers
 {
     public abstract class BaseGameController : MonoBehaviour
     {
-        protected bool isGameOver;
-
         public abstract void GameStart();
         public abstract void GameOver();
+        public abstract void GameQuit();
 
         public abstract void TargetHit();
         public abstract void TargetMissed();
