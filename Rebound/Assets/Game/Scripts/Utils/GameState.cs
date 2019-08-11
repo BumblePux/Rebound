@@ -21,7 +21,6 @@ namespace BumblePux.Rebound.Utils
             set
             {
                 gameModeActive = value;
-                Debug.Log("GameModeActive: " + gameModeActive.ToString());
             }
         }
 
@@ -31,7 +30,6 @@ namespace BumblePux.Rebound.Utils
             set
             {
                 isGameOver = value;
-                Debug.Log("IsGameOver: " + isGameOver.ToString());
             }
         }
 
@@ -41,7 +39,6 @@ namespace BumblePux.Rebound.Utils
             set
             {
                 isPaused = value;
-                Debug.Log("IsPaused: " + isPaused.ToString());
             }
         }
 
