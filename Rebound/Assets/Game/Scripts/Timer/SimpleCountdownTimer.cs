@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using BumblePux.Rebound.Utils;
 
 namespace BumblePux.Rebound.Timer
 {
@@ -62,6 +63,9 @@ namespace BumblePux.Rebound.Timer
         //----------------------------------------
         public void UpdateCurrentTime(float amount)
         {
+            if (!countdownActive)
+                return;
+
             currentTime += amount;
             UpdateCountdownText();
         }
@@ -82,6 +86,9 @@ namespace BumblePux.Rebound.Timer
 
         private void Update()
         {
+            if (GameState.IsPaused)
+                return;
+
             if (countdownActive && !countdownComplete)
             {
                 Countdown();
