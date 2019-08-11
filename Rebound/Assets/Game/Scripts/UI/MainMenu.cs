@@ -9,20 +9,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BumblePux.Rebound.Utils;
 using BumblePux.Rebound.GameControllers;
 
 namespace BumblePux.Rebound.UI
 {
     public class MainMenu : MonoBehaviour
     {
+        [Header("Animators")]
         public Animator buttonsAnimator;
         public Animator playButtonAnimator;
         public Animator titleTextAnimator;
 
+        [Header("External References")]
         public BaseGameController controller;
+        public GameObject pauseCanvas;
 
         private bool isMenuOpen = false;
-        private bool isGameStarted = false;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
@@ -72,15 +75,12 @@ namespace BumblePux.Rebound.UI
         }
 
         //----------------------------------------
-        public void OnReturnedToTitleScreen()
+        public void OnReturnToTitleScreen()
         {
-            if (isGameStarted)
-            {
-                isGameStarted = false;
-                titleTextAnimator.SetBool("startGame", false);
-                playButtonAnimator.SetBool("startGame", false);
-                buttonsAnimator.SetBool("startGame", false);
-            }            
+            GameState.GameModeActive = false;
+            titleTextAnimator.SetBool("startGame", false);
+            playButtonAnimator.SetBool("startGame", false);
+            buttonsAnimator.SetBool("startGame", false);
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -106,14 +106,15 @@ namespace BumblePux.Rebound.UI
 
             yield return StartCoroutine(WaitForButtonAnimationFinished());
 
-            isGameStarted = true;
+            GameState.GameModeActive = true;
             titleTextAnimator.SetBool("startGame", true);
             playButtonAnimator.SetBool("startGame", true);
             buttonsAnimator.SetBool("startGame", true);
 
             yield return StartCoroutine(WaitForButtonAnimationFinished());
 
-            controller.GameStart();
+            controller.GameStart();            
+            //pauseCanvas.SetActive(true);
         }
 
         //----------------------------------------
