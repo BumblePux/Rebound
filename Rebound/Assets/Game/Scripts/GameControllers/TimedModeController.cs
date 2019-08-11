@@ -15,6 +15,8 @@ using BumblePux.Rebound.Score;
 using BumblePux.Rebound.Timer;
 using BumblePux.Rebound.Planets;
 using BumblePux.Rebound.EffectSystem;
+using BumblePux.Rebound.Utils;
+using BumblePux.Rebound.UI;
 
 using UnityEngine.SceneManagement;
 
@@ -55,29 +57,26 @@ namespace BumblePux.Rebound.GameControllers
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         public override void GameStart()
         {
+            PauseController.SetActive(true);
+
+            GameState.IsGameOver = false;
+
             SetPrefabsActive(true);
+            SetupGame();
 
             gameOverCanvas.SetActive(false);
             scoreUICanvas.SetActive(true);
-            timerUICanvas.SetActive(true);
-
-            timer.StartTime = startTime;
-            player.SetupPlayer(startSpeed, maxSpeed, true);
-
-            isGameOver = false;
+            timerUICanvas.SetActive(true);            
         }
 
         //----------------------------------------
         public override void GameOver()
         {
-            isGameOver = true;
+            PauseController.SetActive(false);
 
+            GameState.IsGameOver = true;
             SetPrefabsActive(false);
-
-            // Reset player to starting speed
-            player.SetupPlayer(startSpeed, maxSpeed, true);
-
-            target.gameObject.SetActive(false);
+            SetupGame();
 
             gameOverCanvas.SetActive(true);
             scoreUICanvas.SetActive(false);
@@ -85,9 +84,23 @@ namespace BumblePux.Rebound.GameControllers
         }
 
         //----------------------------------------
+        public override void GameQuit()
+        {
+            PauseController.SetActive(false);
+
+            GameState.IsGameOver = true;
+            SetPrefabsActive(false);
+            SetupGame();
+
+            gameOverCanvas.SetActive(false);
+            scoreUICanvas.SetActive(false);
+            timerUICanvas.SetActive(false);
+        }
+
+        //----------------------------------------
         public override void TargetHit()
         {
-            if (isGameOver)
+            if (GameState.IsGameOver)
                 return;
 
             // Update score
@@ -115,7 +128,7 @@ namespace BumblePux.Rebound.GameControllers
         //----------------------------------------
         public override void TargetMissed()
         {
-            if (isGameOver)
+            if (GameState.IsGameOver)
                 return;
 
             if (timer.GetCountdownActive())
@@ -150,6 +163,14 @@ namespace BumblePux.Rebound.GameControllers
             timer.gameObject.SetActive(active);
             effects.gameObject.SetActive(active);
             planet.gameObject.SetActive(active);
+        }
+
+        //----------------------------------------
+        private void SetupGame()
+        {
+            timer.ResetCountdown();
+            timer.StartTime = startTime;
+            player.SetupPlayer(startSpeed, maxSpeed, true);
         }
     }
 }
