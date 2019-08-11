@@ -23,6 +23,7 @@ namespace BumblePux.Rebound.Interactables
         public UnityEvent OnInteracted;
 
         private Rigidbody2D rb2d;
+        private Animator anim;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Override Methods
@@ -42,7 +43,8 @@ namespace BumblePux.Rebound.Interactables
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         private void Awake()
         {
-            rb2d = GetComponent<Rigidbody2D>();            
+            rb2d = GetComponent<Rigidbody2D>();
+            anim = GetComponentInChildren<Animator>();
         }
 
         //----------------------------------------
@@ -52,12 +54,13 @@ namespace BumblePux.Rebound.Interactables
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        // Private Methods
+        // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private void MoveToRandomPosition()
+        public void MoveToRandomPosition()
         {
             int angle = (int)(rb2d.rotation - 180f) + Random.Range(-moveLimit, moveLimit);
             rb2d.MoveRotation(angle);
+            anim.SetTrigger("ChangePosition");
         }
     }
 }
