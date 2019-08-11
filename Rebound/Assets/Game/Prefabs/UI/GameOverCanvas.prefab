@@ -607,7 +607,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3906545776662681455}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6062704668641157621}
+        m_MethodName: OnRestartSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &3906545776856820306
@@ -622,6 +633,7 @@ GameObject:
   - component: {fileID: 3906545776856820309}
   - component: {fileID: 3906545776856820308}
   - component: {fileID: 3906545776856820307}
+  - component: {fileID: 6062704668641157621}
   m_Layer: 5
   m_Name: GameOverCanvas
   m_TagString: Untagged
@@ -709,6 +721,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6062704668641157621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3906545776856820306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a752d6c694c65a04e958fbf14ac4345e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverPanel: {fileID: 3906545777860617312}
+  gameOverAnimator: {fileID: 3906545776266876226}
+  scoreText: {fileID: 3906545777830015010}
+  score: {fileID: 0}
+  mainMenu: {fileID: 0}
+  controller: {fileID: 0}
 --- !u!1 &3906545777158782851
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +857,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3906545777158782854}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6062704668641157621}
+        m_MethodName: OnHomeSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &3906545777830015008
@@ -999,6 +1040,7 @@ GameObject:
   - component: {fileID: 3906545777860617313}
   - component: {fileID: 3906545777860617315}
   - component: {fileID: 3906545777860617314}
+  - component: {fileID: 3906545776266876226}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -1024,7 +1066,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -2000}
   m_SizeDelta: {x: 1003.9, y: 1226.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3906545777860617315
@@ -1065,6 +1107,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &3906545776266876226
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3906545777860617312}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dcc55162d0b03e34da5b2e1165f37726, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3906545778000534148
 GameObject:
   m_ObjectHideFlags: 0

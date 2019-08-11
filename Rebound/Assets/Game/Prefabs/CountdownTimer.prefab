@@ -274,5 +274,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6340b4c3c63634ab023142eccc02a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupString: 
+  popupString: Time Frozen
   showPopupOnActivation: 1

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 920639252054905134}
   - component: {fileID: 920639252054905133}
   - component: {fileID: 920639252054905132}
-  - component: {fileID: 920639252054905128}
+  - component: {fileID: 3303269497176350277}
   - component: {fileID: 920639252054905135}
   - component: {fileID: 8692625740415127497}
   - component: {fileID: 9061793375330154395}
@@ -76,7 +76,7 @@ MonoBehaviour:
   maxSpeed: 0
   direction: 1
   lockSpeedChange: 0
---- !u!114 &920639252054905128
+--- !u!114 &3303269497176350277
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,10 +85,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 920639252054905043}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 075aa1bf05e204c4e8d54e893a6b6adc, type: 3}
+  m_Script: {fileID: 11500000, guid: 99819191cd11eec44a9152eb9888eaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseButton: 0
 --- !u!114 &920639252054905135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,12 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8711a6123ca4640aa3683831de8577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {fileID: 920639252054905128}
   OnNoInteractableClicked:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  input: {fileID: 0}
 --- !u!114 &8692625740415127497
 MonoBehaviour:
   m_ObjectHideFlags: 0

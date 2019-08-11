@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 410711887676426962}
   - component: {fileID: 410711887676426963}
   - component: {fileID: 410711887676426960}
+  - component: {fileID: 1512118234}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -181,3 +182,22 @@ MonoBehaviour:
   maxSpeed: 0
   direction: 0
   lockSpeedChange: 0
+--- !u!95 &1512118234
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410711887676426961}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 71e27c0fdc70c344c86855dab478983d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
