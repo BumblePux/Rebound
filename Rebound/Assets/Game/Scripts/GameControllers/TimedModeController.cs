@@ -33,7 +33,6 @@ namespace BumblePux.Rebound.GameControllers
         [SerializeField] private Planet planet = default;
 
         [Header("Canvas References")]
-        [SerializeField] private GameObject gameOverCanvas = default;
         [SerializeField] private GameObject scoreUICanvas = default;
         [SerializeField] private GameObject timerUICanvas = default;
 
@@ -52,6 +51,8 @@ namespace BumblePux.Rebound.GameControllers
         [SerializeField] private int minScoreToStartEffects = 10;
         [SerializeField] private int triggerEffectAfterXPoints = 8;
 
+        private bool timerActive = false;
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Override Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,7 +65,6 @@ namespace BumblePux.Rebound.GameControllers
             SetPrefabsActive(true);
             SetupGame();
 
-            gameOverCanvas.SetActive(false);
             scoreUICanvas.SetActive(true);
             timerUICanvas.SetActive(true);            
         }
@@ -73,12 +73,12 @@ namespace BumblePux.Rebound.GameControllers
         public override void GameOver()
         {
             PauseController.SetActive(false);
+            GameOverController.ShowGameOverPanel();
 
             GameState.IsGameOver = true;
             SetPrefabsActive(false);
             SetupGame();
 
-            gameOverCanvas.SetActive(true);
             scoreUICanvas.SetActive(false);
             timerUICanvas.SetActive(false);
         }
@@ -92,7 +92,6 @@ namespace BumblePux.Rebound.GameControllers
             SetPrefabsActive(false);
             SetupGame();
 
-            gameOverCanvas.SetActive(false);
             scoreUICanvas.SetActive(false);
             timerUICanvas.SetActive(false);
         }
@@ -109,8 +108,11 @@ namespace BumblePux.Rebound.GameControllers
             // Update timer
             if (score.GetCurrentScore() >= scoreToStartTimer)
             {
-                if (!timer.GetCountdownActive())
+                if (!timer.GetCountdownActive() && !timerActive)
+                {
                     timer.EnableTimer();
+                    timerActive = true;
+                }
                 else
                     timer.UpdateCurrentTime(timeBonus);
             }            
@@ -168,9 +170,13 @@ namespace BumblePux.Rebound.GameControllers
         //----------------------------------------
         private void SetupGame()
         {
+            timerActive = false;
             timer.ResetCountdown();
             timer.StartTime = startTime;
             player.SetupPlayer(startSpeed, maxSpeed, true);
+            score.ResetScore();
+            planet.ShowRandomPlanet();
+            target.MoveToRandomPosition();
         }
     }
 }
