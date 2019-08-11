@@ -256,12 +256,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 920639252054905128, guid: ba948580c2dea8245bbe81ddc342d285,
+    - target: {fileID: 920639252054905135, guid: ba948580c2dea8245bbe81ddc342d285,
         type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 920639252054905135, guid: ba948580c2dea8245bbe81ddc342d285,
+    - target: {fileID: 920639252054905128, guid: ba948580c2dea8245bbe81ddc342d285,
         type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1177,6 +1177,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2061658059585294752, guid: 99d96fed3e8294042a91f8cc66b07819,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2061658059585294764, guid: 99d96fed3e8294042a91f8cc66b07819,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1301,11 +1306,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameOverCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3906545776856820306, guid: 9dc75578ef89c7b40902127af7c011f4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3906545776856820310, guid: 9dc75578ef89c7b40902127af7c011f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1428,7 +1428,7 @@ PrefabInstance:
     - target: {fileID: 4010096306271493681, guid: 6a52c3ade7bfe1f4c8468526fd1d1c81,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4010096306271493685, guid: 6a52c3ade7bfe1f4c8468526fd1d1c81,
         type: 3}
