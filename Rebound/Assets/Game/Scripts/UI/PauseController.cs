@@ -43,24 +43,28 @@ namespace BumblePux.Rebound.UI
         //----------------------------------------
         public void OnPauseSelected()
         {
+            StopAllCoroutines();
             StartCoroutine(Pause());
         }
 
         //----------------------------------------
         public void OnResumeSelected()
         {
+            StopAllCoroutines();
             StartCoroutine(Resume());
         }
 
         //----------------------------------------
         public void OnHomeSelected()
         {
+            StopAllCoroutines();
             StartCoroutine(MainMenu());
         }
 
         //----------------------------------------
         public void OnRestartSelected()
         {
+            StopAllCoroutines();
             StartCoroutine(Restart());
         }
 
@@ -87,8 +91,7 @@ namespace BumblePux.Rebound.UI
         private IEnumerator Pause()
         {
             GameState.IsPaused = true;
-            pauseButtonAnimator.SetBool("isPaused", GameState.IsPaused);
-            pausePanelAnimator.SetBool("isPaused", GameState.IsPaused);
+            SetAnimators(true);
 
             yield return StartCoroutine(WaitForAnimations());
 
@@ -99,12 +102,12 @@ namespace BumblePux.Rebound.UI
         private IEnumerator Resume()
         {
             Time.timeScale = 1f;
-
-            GameState.IsPaused = false;
-            pauseButtonAnimator.SetBool("isPaused", GameState.IsPaused);
-            pausePanelAnimator.SetBool("isPaused", GameState.IsPaused);
+            
+            SetAnimators(false);
 
             yield return StartCoroutine(WaitForAnimations());
+
+            GameState.IsPaused = false;
         }
 
         //----------------------------------------
@@ -113,8 +116,7 @@ namespace BumblePux.Rebound.UI
             Time.timeScale = 1f;
 
             GameState.IsPaused = false;
-            pauseButtonAnimator.SetBool("isPaused", GameState.IsPaused);
-            pausePanelAnimator.SetBool("isPaused", GameState.IsPaused);
+            SetAnimators(false);
 
             yield return StartCoroutine(WaitForAnimations());
 
@@ -128,8 +130,7 @@ namespace BumblePux.Rebound.UI
             Time.timeScale = 1f;
 
             GameState.IsPaused = false;
-            pauseButtonAnimator.SetBool("isPaused", GameState.IsPaused);
-            pausePanelAnimator.SetBool("isPaused", GameState.IsPaused);
+            SetAnimators(false);            
 
             yield return StartCoroutine(WaitForAnimations());
 
@@ -139,7 +140,14 @@ namespace BumblePux.Rebound.UI
         //----------------------------------------
         private IEnumerator WaitForAnimations()
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(pauseButtonAnimator.GetCurrentAnimatorStateInfo(0).length);
+        }
+
+        //----------------------------------------
+        private void SetAnimators(bool toggle)
+        {
+            pauseButtonAnimator.SetBool("isPaused", toggle);
+            pausePanelAnimator.SetBool("isPaused", toggle);
         }
     }
 }
