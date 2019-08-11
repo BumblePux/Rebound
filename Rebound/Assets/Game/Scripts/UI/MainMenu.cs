@@ -113,8 +113,7 @@ namespace BumblePux.Rebound.UI
 
             yield return StartCoroutine(WaitForButtonAnimationFinished());
 
-            controller.GameStart();            
-            //pauseCanvas.SetActive(true);
+            controller.GameStart();
         }
 
         //----------------------------------------
