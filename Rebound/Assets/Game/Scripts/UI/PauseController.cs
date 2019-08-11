@@ -7,58 +7,61 @@
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using BumblePux.Rebound.Utils;
+using BumblePux.Rebound.GameControllers;
 
 namespace BumblePux.Rebound.UI
 {
     public class PauseController : MonoBehaviour
     {
-        [SerializeField] private Button pauseButton = default;
+        private static PauseController instance;
+
+        [SerializeField] private GameObject buttonPanel = default;
         [SerializeField] private GameObject pausePanel = default;
 
-        private Animator anim;
+        [Header("Animators")]
+        public Animator pauseButtonAnimator;
+        public Animator pausePanelAnimator;
 
-        private bool isPaused;
+        [Header("External Referenes")]
+        public MainMenu mainMenu;
+        public BaseGameController controller;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public void OnPauseButtonClicked()
+        public static void SetActive(bool active)
         {
-            if (isPaused)
-                Resume();
-            else
-                Pause();
+            if (instance == null)
+                return;
+
+            instance.buttonPanel.SetActive(active);
+            instance.pausePanel.SetActive(active);
         }
 
         //----------------------------------------
-        public void Pause()
+        public void OnPauseSelected()
         {
-            isPaused = true;
-
-            Time.timeScale = 0f;
-
-            pauseButton.gameObject.SetActive(false);
-            pausePanel.SetActive(true);
+            StartCoroutine(Pause());
         }
 
         //----------------------------------------
-        public void Resume()
+        public void OnResumeSelected()
         {
-            isPaused = false;
-
-            Time.timeScale = 1f;
-
-            pauseButton.gameObject.SetActive(true);
-            pausePanel.SetActive(false);
+            StartCoroutine(Resume());
         }
 
         //----------------------------------------
-        public void RestartScene()
+        public void OnHomeSelected()
         {
+            StartCoroutine(MainMenu());
+        }
 
+        //----------------------------------------
+        public void OnRestartSelected()
+        {
+            StartCoroutine(Restart());
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,12 +69,77 @@ namespace BumblePux.Rebound.UI
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         private void Awake()
         {
-            anim = GetComponent<Animator>();
+            // Initialize Singleton
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Private Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        
+        private IEnumerator Pause()
+        {
+            GameState.IsPaused = true;
+            pauseButtonAnimator.SetBool("isPaused", GameState.IsPaused);
+            pausePanelAnimator.SetBool("isPaused", GameState.IsPaused);
+
+            yield return StartCoroutine(WaitForAnimations());
+
+            Time.timeScale = 0f;
+        }
+
+        //----------------------------------------
+        private IEnumerator Resume()
+        {
+            Time.timeScale = 1f;
+
+            GameState.IsPaused = false;
+            pauseButtonAnimator.SetBool("isPaused", GameState.IsPaused);
+            pausePanelAnimator.SetBool("isPaused", GameState.IsPaused);
+
+            yield return StartCoroutine(WaitForAnimations());
+        }
+
+        //----------------------------------------
+        private IEnumerator MainMenu()
+        {
+            Time.timeScale = 1f;
+
+            GameState.IsPaused = false;
+            pauseButtonAnimator.SetBool("isPaused", GameState.IsPaused);
+            pausePanelAnimator.SetBool("isPaused", GameState.IsPaused);
+
+            yield return StartCoroutine(WaitForAnimations());
+
+            controller.GameQuit();
+            mainMenu.OnReturnToTitleScreen();
+        }
+
+        //----------------------------------------
+        private IEnumerator Restart()
+        {
+            Time.timeScale = 1f;
+
+            GameState.IsPaused = false;
+            pauseButtonAnimator.SetBool("isPaused", GameState.IsPaused);
+            pausePanelAnimator.SetBool("isPaused", GameState.IsPaused);
+
+            yield return StartCoroutine(WaitForAnimations());
+
+            controller.GameStart();
+        }
+
+        //----------------------------------------
+        private IEnumerator WaitForAnimations()
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }
