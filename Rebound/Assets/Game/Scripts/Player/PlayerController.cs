@@ -12,15 +12,16 @@ using UnityEngine;
 using BumblePux.Rebound.UserInput;
 using BumblePux.Rebound.Interactables;
 using BumblePux.Rebound.General;
+using BumblePux.Rebound.Utils;
 using UnityEngine.Events;
 
 namespace BumblePux.Rebound.Player
 {
     public class PlayerController : MonoBehaviour
-    {
-        public BaseUserInput input;
+    {        
         public UnityEvent OnNoInteractableClicked;
 
+        public BaseUserInput input;
         private Rotator2D rotator;
         private SpriteRenderer sr;
         private Transform trail;
@@ -54,8 +55,9 @@ namespace BumblePux.Rebound.Player
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Unity Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private void Awake()
+        private void Start()
         {
+            input = GetComponent<BaseUserInput>();
             rotator = GetComponent<Rotator2D>();
             sr = GetComponentInChildren<SpriteRenderer>();
             trail = GetComponentInChildren<TrailRenderer>().gameObject.GetComponent<Transform>();
@@ -64,6 +66,9 @@ namespace BumblePux.Rebound.Player
         //----------------------------------------
         private void Update()
         {
+            if (GameState.IsPaused)
+                return;
+
             if (input.Clicked())
             {
                 if (interactable != null)
