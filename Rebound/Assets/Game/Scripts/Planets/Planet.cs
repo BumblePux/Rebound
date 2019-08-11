@@ -17,6 +17,7 @@ namespace BumblePux.Rebound.Planets
         [SerializeField] private Sprite[] planetSprites = default;
 
         private SpriteRenderer sr;
+        private Animator anim;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
@@ -26,6 +27,7 @@ namespace BumblePux.Rebound.Planets
             int planetIndex = Random.Range(0, planetSprites.Length);
 
             sr.sprite = planetSprites[planetIndex];
+            anim.SetTrigger("ShowPlanet");
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,11 +36,12 @@ namespace BumblePux.Rebound.Planets
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
+            anim = GetComponent<Animator>();
         }
 
         //----------------------------------------
         private void OnEnable()
-        {
+        {            
             ShowRandomPlanet();
         }
     }
