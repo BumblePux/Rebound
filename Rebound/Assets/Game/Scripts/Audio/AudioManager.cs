@@ -6,9 +6,11 @@
 //
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace BumblePux.Rebound.Audio
 {
@@ -16,75 +18,94 @@ namespace BumblePux.Rebound.Audio
     {
         private static AudioManager instance;
 
-        [Header("Singleton Settings")]
-        [SerializeField] private bool isPersistent = true;
-
         private AudioSource primarySource;
         private AudioSource secondarySource;
         private AudioSource sfxSource;
 
-        private bool isPrimarySourcePlaying;
+        private bool isFirstSourcePlaying;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public static void PlayMusic(AudioClip audioClip)
+        public static void Play(Sound sound)
         {
             if (instance == null)
                 return;
 
-            AudioSource activeSource = instance.isPrimarySourcePlaying ? instance.primarySource : instance.secondarySource;
+            AudioSource activeSource = instance.isFirstSourcePlaying ? instance.primarySource : instance.secondarySource;
 
-            activeSource.clip = audioClip;
-            activeSource.Play();
+            activeSource.clip = sound.clip;
+            activeSource.volume = sound.volume;
+            activeSource.pitch = sound.pitch;
+            activeSource.Play();            
         }
 
         //----------------------------------------
-        public static void PlayMusicWithFade(AudioClip audioClip, float transitionTime = 1f)
+        public static void PlaySfx(Sound sound)
         {
             if (instance == null)
                 return;
 
-            AudioSource activeSource = instance.isPrimarySourcePlaying ? instance.primarySource : instance.secondarySource;
-
-            instance.StartCoroutine(UpdateMusicWithFade(activeSource, audioClip, transitionTime));
+            instance.sfxSource.volume = sound.volume;
+            instance.sfxSource.pitch = sound.pitch;
+            instance.sfxSource.clip = sound.clip;
+            instance.sfxSource.Play();
         }
 
         //----------------------------------------
-        public static void PlayMusicWithCrossFade(AudioClip audioClip, float transitionTime = 1f)
+        public static void Stop()
         {
             if (instance == null)
                 return;
 
-            // Determine current and new audio source
-            AudioSource activeSource = instance.isPrimarySourcePlaying ? instance.primarySource : instance.secondarySource;
-            AudioSource newSource = instance.isPrimarySourcePlaying ? instance.secondarySource : instance.primarySource;
+            AudioSource activeSource = instance.isFirstSourcePlaying ? instance.primarySource : instance.secondarySource;
 
-            // Swap the active source
-            instance.isPrimarySourcePlaying = !instance.isPrimarySourcePlaying;
+            activeSource.Stop();
+        }
 
-            newSource.clip = audioClip;
+        //----------------------------------------
+        public static void FadeIn(Sound sound, float duration = 1f)
+        {
+            if (instance == null)
+                return;
+
+            AudioSource activeSource = instance.isFirstSourcePlaying ? instance.primarySource : instance.secondarySource;
+            activeSource.clip = sound.clip;
+            activeSource.volume = sound.volume;
+            activeSource.clip = sound.clip;
+
+            instance.StartCoroutine(instance.FadeAudioIn(activeSource, duration));
+        }
+
+        //----------------------------------------
+        public static void FadeOut(float duration = 1f)
+        {
+            if (instance == null)
+                return;
+
+            AudioSource activeSource = instance.isFirstSourcePlaying ? instance.primarySource : instance.secondarySource;
+            
+            if (activeSource.isPlaying)
+                instance.StartCoroutine(instance.FadeAudioOut(activeSource, duration));
+        }
+
+        //----------------------------------------
+        public static void CrossFade(Sound sound, float duration = 1f)
+        {
+            if (instance == null)
+                return;
+
+            AudioSource activeSource = instance.isFirstSourcePlaying ? instance.primarySource : instance.secondarySource;
+            AudioSource newSource = instance.isFirstSourcePlaying ? instance.secondarySource : instance.primarySource;
+
+            instance.isFirstSourcePlaying = !instance.isFirstSourcePlaying;
+
+            newSource.clip = sound.clip;
+            newSource.volume = sound.volume;
+            newSource.clip = sound.clip;
             newSource.Play();
 
-            instance.StartCoroutine(UpdateMusicWithCrossFade(activeSource, newSource, transitionTime));
-        }
-
-        //----------------------------------------
-        public static void PlaySfx(AudioClip audioClip)
-        {
-            if (instance == null)
-                return;
-
-            instance.sfxSource.PlayOneShot(audioClip);
-        }
-
-        //----------------------------------------
-        public static void PlaySfx(AudioClip audioClip, float volume)
-        {
-            if (instance == null)
-                return;
-
-            instance.sfxSource.PlayOneShot(audioClip, volume);
+            instance.StartCoroutine(instance.CrossFadeAudio(activeSource, newSource, sound, duration));
         }
 
         //----------------------------------------
@@ -111,81 +132,77 @@ namespace BumblePux.Rebound.Audio
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         private void Awake()
         {
-            InitializeSingleton();
-
-            CreateAudioSources();
-            InitializeAudioSources();
+            SetupSingleton();
+            SetupAudioSources();            
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Private Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private static IEnumerator UpdateMusicWithFade(AudioSource activeSource, AudioClip audioClip, float transitionTime)
-        {
-            if (!activeSource.isPlaying)
-                activeSource.Play();
-
-            // Do music fade out
-            for (float transition = 0f; transition < transitionTime; transition += Time.deltaTime)
-            {
-                activeSource.volume = 1 - (transition / transitionTime);
-                yield return null;
-            }
-
-            activeSource.Stop();
-            activeSource.clip = audioClip;
-            activeSource.Play();
-
-            // Do music fade out
-            for (float transition = 0f; transition < transitionTime; transition += Time.deltaTime)
-            {
-                activeSource.volume = transition / transitionTime;
-                yield return null;
-            }
-        }
-
-        //----------------------------------------
-        private static IEnumerator UpdateMusicWithCrossFade(AudioSource originalSource, AudioSource newSource, float transitionTime)
-        {
-            for (float transition = 0f; transition < transitionTime; transition += Time.deltaTime)
-            {
-                originalSource.volume = 1 - (transition / transitionTime);
-                newSource.volume = transition / transitionTime;
-                yield return null;
-            }
-
-            originalSource.Stop();
-        }
-
-        //----------------------------------------
-        private void InitializeSingleton()
+        private void SetupSingleton()
         {
             if (instance != null && instance != this)
             {
                 Destroy(gameObject);
+                return;
             }
             else
             {
                 instance = this;
-
-                if (isPersistent)
-                    DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
             }
         }
 
         //----------------------------------------
-        private void CreateAudioSources()
+        private void SetupAudioSources()
         {
+            // Create sources
             primarySource = gameObject.AddComponent<AudioSource>();
             secondarySource = gameObject.AddComponent<AudioSource>();
             sfxSource = gameObject.AddComponent<AudioSource>();
+
+            // Set parameters
+            primarySource.loop = true;
+            secondarySource.loop = true;
+            sfxSource.loop = false;
         }
 
         //----------------------------------------
-        private void InitializeAudioSources()
+        private IEnumerator FadeAudioIn(AudioSource activeSource, float duration)
         {
-            primarySource.loop = true;
-            secondarySource.loop = true;
+            if (!activeSource.isPlaying)
+                activeSource.Play();
+
+            for (float transition = 0f; transition < duration; transition += Time.deltaTime)
+            {
+                activeSource.volume = transition / duration;
+                yield return null;
+            }            
+        }
+
+        //----------------------------------------
+        private IEnumerator FadeAudioOut(AudioSource activeSource, float duration)
+        {
+            for (float transition = 0f; transition < duration; transition += Time.deltaTime)
+            {
+                activeSource.volume = 1 - (transition / duration);
+                yield return null;
+            }
+
+            activeSource.Stop();
+        }
+
+        //----------------------------------------
+        private IEnumerator CrossFadeAudio(AudioSource originalSource, AudioSource newSource, Sound sound, float duration)
+        {
+            for (float transition = 0f; transition < duration; transition += Time.deltaTime)
+            {
+                originalSource.volume = sound.volume - (transition / duration);
+                newSource.volume = (transition / duration) * sound.volume;
+                yield return null;
+            }
+
+            originalSource.Stop();
         }
     }
 }
