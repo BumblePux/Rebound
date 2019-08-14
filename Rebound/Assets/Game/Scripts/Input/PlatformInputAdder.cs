@@ -21,6 +21,7 @@ namespace BumblePux.Rebound.UserInput
 #elif UNITY_ANDROID
             gameObject.AddComponent<MobileInput>();            
 #endif
+            Destroy(this);
         }
     }
 }
