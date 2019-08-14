@@ -6,10 +6,10 @@
 //
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using BumblePux.Rebound.Audio;
 
 namespace BumblePux.Rebound.Interactables
@@ -17,10 +17,10 @@ namespace BumblePux.Rebound.Interactables
     public class Target : BaseInteractable
     {
         [Range(0, 120)]
-        [SerializeField] private int moveLimit = 90;
-        [SerializeField] private AudioClip onInteractedClip = default;
+        public int moveLimit = 90;
+        public Sound onInteractedSound;
 
-        public UnityEvent OnInteracted;
+        public static Action OnTargetHit;
 
         private Rigidbody2D rb2d;
         private Animator anim;
@@ -32,10 +32,12 @@ namespace BumblePux.Rebound.Interactables
         {
             MoveToRandomPosition();
 
-            if (onInteractedClip != null)
-                AudioManager.PlaySfx(onInteractedClip);
+            // Play sound effect
+            if (onInteractedSound != null)
+                AudioManager.PlaySfx(onInteractedSound);
 
-            OnInteracted.Invoke();
+            if (OnTargetHit != null)
+                OnTargetHit.Invoke();
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,9 +60,9 @@ namespace BumblePux.Rebound.Interactables
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         public void MoveToRandomPosition()
         {
-            int angle = (int)(rb2d.rotation - 180f) + Random.Range(-moveLimit, moveLimit);
+            int angle = (int)(rb2d.rotation - 180f) + UnityEngine.Random.Range(-moveLimit, moveLimit);
             rb2d.MoveRotation(angle);
-            anim.SetTrigger("ChangePosition");
+            anim.Play("target_appear", -1, 0f);
         }
     }
 }
