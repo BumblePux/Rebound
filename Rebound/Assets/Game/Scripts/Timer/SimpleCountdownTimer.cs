@@ -86,8 +86,8 @@ namespace BumblePux.Rebound.Timer
 
         private void Update()
         {
-            if (GameState.IsPaused)
-                return;
+            //if (GameState.IsPaused)
+            //    return;
 
             if (countdownActive && !countdownComplete)
             {
