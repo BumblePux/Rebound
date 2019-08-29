@@ -28,6 +28,7 @@ namespace BumblePux.Rebound.Player
         private SpriteRenderer sr;
         private Transform trail;
         private BaseInteractable interactable;
+        private Animator animator;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
@@ -60,6 +61,12 @@ namespace BumblePux.Rebound.Player
             return instance.rotator.Speed;
         }
 
+        //----------------------------------------
+        public static void PlayDisappearAnimation()
+        {
+            instance.animator.SetTrigger("sceneChange");
+        }
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Unity Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,13 +79,13 @@ namespace BumblePux.Rebound.Player
             }
             else
             {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
+                instance = this;                
             }
 
             // Get required child components
             sr = GetComponentInChildren<SpriteRenderer>();
-            trail = GetComponentInChildren<TrailRenderer>().gameObject.GetComponent<Transform>();            
+            trail = GetComponentInChildren<TrailRenderer>().gameObject.GetComponent<Transform>();
+            animator = GetComponentInChildren<Animator>();
         }
 
         //----------------------------------------

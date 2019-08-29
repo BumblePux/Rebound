@@ -18,6 +18,7 @@ namespace BumblePux.Rebound.Audio
     {
         private static AudioManager instance;
 
+        public AudioMixer mainMixer;
         public AudioMixerGroup backgroundMixer;
         public AudioMixerGroup sfxMixer;
 
@@ -40,7 +41,7 @@ namespace BumblePux.Rebound.Audio
             activeSource.clip = sound.clip;
             activeSource.volume = sound.volume;
             activeSource.pitch = sound.pitch;
-            activeSource.Play();            
+            activeSource.Play();
         }
 
         //----------------------------------------
@@ -51,8 +52,8 @@ namespace BumblePux.Rebound.Audio
 
             instance.sfxSource.volume = sound.volume;
             instance.sfxSource.pitch = sound.pitch;
-            instance.sfxSource.clip = sound.clip;
-            instance.sfxSource.Play();
+            //instance.sfxSource.clip = sound.clip;
+            instance.sfxSource.PlayOneShot(sound.clip);
         }
 
         //----------------------------------------
@@ -128,6 +129,76 @@ namespace BumblePux.Rebound.Audio
                 return;
 
             instance.sfxSource.volume = volume;
+        }
+
+        //----------------------------------------
+        public static void SetMusicActive(bool active)
+        {
+            if (instance == null)
+                return;
+
+            if (active)
+            {
+                instance.mainMixer.SetFloat("Background", -10f);
+                PlayerPrefs.SetInt("IsMusicEnabled", 1);
+            }
+            else
+            {
+                instance.mainMixer.SetFloat("Background", -80f);
+                PlayerPrefs.SetInt("IsMusicEnabled", 0);
+            }
+        }
+
+        //----------------------------------------
+        public static void SetSfxActive(bool active)
+        {
+            if (instance == null)
+                return;
+
+            if (active)
+            {
+                instance.mainMixer.SetFloat("Sfx", -5f);
+                PlayerPrefs.SetInt("IsSfxEnabled", 1);
+            }
+            else
+            {
+                instance.mainMixer.SetFloat("Sfx", -80f);
+                PlayerPrefs.SetInt("IsSfxEnabled", 0);
+            }
+        }
+
+        //----------------------------------------
+        public static bool GetMusicEnabled()
+        {
+            bool enabled;
+
+            int data = PlayerPrefs.GetInt("IsMusicEnabled");
+            if (data == 1)
+                enabled = true;
+            else
+                enabled = false;
+
+            return enabled;
+        }
+
+        //----------------------------------------
+        public static bool GetSfxEnabled()
+        {
+            bool enabled;
+
+            int data = PlayerPrefs.GetInt("IsSfxEnabled");
+            if (data == 1)
+                enabled = true;
+            else
+                enabled = false;
+
+            return enabled;
+        }
+
+        //----------------------------------------
+        public static bool IsMusicPlaying()
+        {
+            return instance.primarySource.isPlaying || instance.secondarySource.isPlaying;
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

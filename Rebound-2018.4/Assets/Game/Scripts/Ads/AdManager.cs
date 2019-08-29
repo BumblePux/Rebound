@@ -25,6 +25,8 @@ namespace BumblePux.Rebound.Ads
         private string unityPlacementId = "rewardedVideo";
         private bool testMode = true;
 
+        private bool isAdReady = false;
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,12 +40,18 @@ namespace BumblePux.Rebound.Ads
             Advertisement.Show(instance.unityPlacementId);
         }
 
+        //----------------------------------------
+        public static bool IsAdReady()
+        {
+            return instance.isAdReady;
+        }
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // IUnityAdsListener Interface Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         public void OnUnityAdsDidError(string message)
         {
-            Debug.Log("Ad did error: " + message);
+            //Debug.Log("Ad did error: " + message);
         }
 
         //----------------------------------------
@@ -51,23 +59,23 @@ namespace BumblePux.Rebound.Ads
         {
             if (showResult == ShowResult.Finished)
             {
-                Debug.Log("Ad finished. Dishing out rewards!");
+                //Debug.Log("Ad finished. Dishing out rewards!");
                 instance.OnAdCompleted.Invoke();
             }
             else if (showResult == ShowResult.Skipped)
             {
-                Debug.Log("Ad skipped. No rewards for you!");
+                //Debug.Log("Ad skipped. No rewards for you!");
             }
             else if (showResult == ShowResult.Failed)
             {
-                Debug.Log("Ad did not finish due to an error");
+                //Debug.Log("Ad did not finish due to an error");
             }
         }
 
         //----------------------------------------
         public void OnUnityAdsDidStart(string placementId)
         {
-            Debug.Log("Ad did start: " + placementId);
+            //Debug.Log("Ad did start: " + placementId);
         }
 
         //----------------------------------------
@@ -75,7 +83,7 @@ namespace BumblePux.Rebound.Ads
         {
             if (placementId == unityPlacementId)
             {
-                Debug.Log("Ad Ready");
+                instance.isAdReady = true;
             }
         }
 

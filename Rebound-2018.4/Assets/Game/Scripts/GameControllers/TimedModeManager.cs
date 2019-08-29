@@ -16,6 +16,7 @@ using BumblePux.Rebound.Planets;
 using BumblePux.Rebound.Score;
 using BumblePux.Rebound.UI;
 using BumblePux.Rebound.Audio;
+using BumblePux.Rebound.GPGServices;
 
 namespace BumblePux.Rebound.GameControllers
 {
@@ -69,6 +70,16 @@ namespace BumblePux.Rebound.GameControllers
 
             PlayerController.ReactToTargetHit(speedIncrement);
             lastPlayerSpeed = PlayerController.GetSpeed();
+
+            // Time bonus/penalty multiplier
+            if (ScoreManager.Score % 50 == 0)
+            {
+                timePenalty *= 2;
+            }
+
+            // Attempt to unlock achievements
+            GPGS.AttemptTimedModeAchievementsUnlock(ScoreManager.Score);
+
         }
 
         //----------------------------------------

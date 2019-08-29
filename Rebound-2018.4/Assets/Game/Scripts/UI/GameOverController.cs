@@ -14,7 +14,9 @@ using UnityEngine.UI;
 using TMPro;
 using BumblePux.Rebound.Score;
 using BumblePux.Rebound.Audio;
+using BumblePux.Rebound.Player;
 using BumblePux.Rebound.Ads;
+using BumblePux.Rebound.GPGServices;
 
 namespace BumblePux.Rebound.UI
 {
@@ -33,6 +35,12 @@ namespace BumblePux.Rebound.UI
         {
             SetScore(ScoreManager.Score);
             gameOverAnimator.SetBool("gameOverAppear", true);
+
+            if (!AdManager.IsAdReady())
+                adButton.gameObject.SetActive(false);
+
+            GPGS.UnlockWelcomeAchievement();
+            GPGS.PostToLeaderboard(ScoreManager.Score, Rebound_GPGSIds.leaderboard_timed_mode);
         }
 
         //----------------------------------------
@@ -49,6 +57,7 @@ namespace BumblePux.Rebound.UI
         public void LoadMainMenu()
         {
             AudioManager.PlaySfx(buttonSound);
+            PlayerController.PlayDisappearAnimation();
             gameOverAnimator.SetBool("gameOverAppear", false);
             StartCoroutine(LoadSceneAfterAnimations("MainMenu", animationWaitDuration));
         }

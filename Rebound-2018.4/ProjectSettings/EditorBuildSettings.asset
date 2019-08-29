@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Game/Scenes/Setup.unity
+    guid: 22c77c03ea39f914e89af13fbdf1a5dc
+  - enabled: 1
+    path: Assets/Game/Scenes/Settings.unity
+    guid: 86935ba50fb594847be21ed163550af4
+  - enabled: 1
     path: Assets/Game/Scenes/MainMenu.unity
     guid: d18086288cb986244b2c32825ed624b6
+  - enabled: 1
+    path: Assets/Game/Scenes/HowToPlay.unity
+    guid: 0bc83ce39e6f39c4882d80351b06eb0a
   - enabled: 1
     path: Assets/Game/Scenes/TimedMode.unity
     guid: 7e8d07f7b61db3445aced78a086bbe11
