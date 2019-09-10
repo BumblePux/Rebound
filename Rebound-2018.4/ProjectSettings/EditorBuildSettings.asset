@@ -16,8 +16,8 @@ EditorBuildSettings:
     guid: d18086288cb986244b2c32825ed624b6
   - enabled: 1
     path: Assets/Game/Scenes/HowToPlay.unity
-    guid: 0bc83ce39e6f39c4882d80351b06eb0a
+    guid: 9aaba9a16cd0b744dba346a9ac7d4009
   - enabled: 1
     path: Assets/Game/Scenes/TimedMode.unity
-    guid: 7e8d07f7b61db3445aced78a086bbe11
+    guid: edb4a615c26a71e41bb358c1c2b2d764
   m_configObjects: {}

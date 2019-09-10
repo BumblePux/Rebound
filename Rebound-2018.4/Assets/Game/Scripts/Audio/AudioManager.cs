@@ -18,6 +18,9 @@ namespace BumblePux.Rebound.Audio
     {
         private static AudioManager instance;
 
+        public OnOffSprite musicImage;
+        public OnOffSprite sfxImage;
+
         public AudioMixer mainMixer;
         public AudioMixerGroup backgroundMixer;
         public AudioMixerGroup sfxMixer;
@@ -170,6 +173,9 @@ namespace BumblePux.Rebound.Audio
         //----------------------------------------
         public static bool GetMusicEnabled()
         {
+            if (instance == null)
+                return false;
+
             bool enabled;
 
             int data = PlayerPrefs.GetInt("IsMusicEnabled");
@@ -182,8 +188,23 @@ namespace BumblePux.Rebound.Audio
         }
 
         //----------------------------------------
+        public static Sprite GetMusicSprite(bool active)
+        {
+            if (instance == null)
+                return null;
+
+            if (active)
+                return instance.musicImage.on;
+
+            return instance.musicImage.off;
+        }
+
+        //----------------------------------------
         public static bool GetSfxEnabled()
         {
+            if (instance == null)
+                return false;
+
             bool enabled;
 
             int data = PlayerPrefs.GetInt("IsSfxEnabled");
@@ -196,8 +217,23 @@ namespace BumblePux.Rebound.Audio
         }
 
         //----------------------------------------
+        public static Sprite GetSfxSprite(bool active)
+        {
+            if (instance == null)
+                return null;
+
+            if (active)
+                return instance.sfxImage.on;
+
+            return instance.sfxImage.off;
+        }
+
+        //----------------------------------------
         public static bool IsMusicPlaying()
         {
+            if (instance == null)
+                return false;
+
             return instance.primarySource.isPlaying || instance.secondarySource.isPlaying;
         }
 

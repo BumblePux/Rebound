@@ -6,143 +6,101 @@
 //
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using BumblePux.Rebound.General;
 using BumblePux.Rebound.Interactables;
-using BumblePux.Rebound.UserInput;
 
 namespace BumblePux.Rebound.Player
 {
     public class PlayerController : MonoBehaviour
-    {
-        private static PlayerController instance;
-
-        public static event Action OnTargetMissed;
-
-        public BaseUserInput input;
+    {        
         public Rotator2D rotator;
+        public float maxSpeed = 600f;
 
+        private Animator animator;
         private SpriteRenderer sr;
         private Transform trail;
-        private BaseInteractable interactable;
-        private Animator animator;
+
+        [HideInInspector]
+        public Target target;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public static void Setup(float startSpeed, float maxSpeed, bool useMaxSpeed)
+
+        //----------------------------------------
+        public void SetSpeed(float speed)
         {
-            instance.rotator.Speed = startSpeed;
-            instance.rotator.MaxSpeed = maxSpeed;
-            instance.rotator.UseMaxSpeed = useMaxSpeed;
+            rotator.speed = speed;
         }
 
         //----------------------------------------
-        public static void ReactToTargetHit(float speedIncrement)
+        public void IncreaseSpeed(float amount)
         {
-            instance.rotator.Speed += speedIncrement;
+            rotator.speed += amount;
+            if (rotator.speed > maxSpeed)
+                rotator.speed = maxSpeed;
+        }
 
-            if (instance.AttemptChangeDirection())
+        //----------------------------------------
+        public void AttemptChangeDirection()
+        {
+            int toggle = Random.Range(0, 2);
+            if (toggle == 1)
             {
-                instance.rotator.ChangeDirection();
-                instance.sr.flipY = !instance.sr.flipY;
-
-                Vector3 trailPos = instance.trail.localPosition;
-                instance.trail.localPosition = new Vector3(0f, trailPos.y * -1, 0f);
+                rotator.ChangeDirection();
+                FlipImage();
             }
         }
 
         //----------------------------------------
-        public static float GetSpeed()
+        public void Disappear()
         {
-            return instance.rotator.Speed;
+            animator.SetTrigger("sceneChange");
         }
 
         //----------------------------------------
-        public static void PlayDisappearAnimation()
+        public void GetReferences()
         {
-            instance.animator.SetTrigger("sceneChange");
+            animator = GetComponentInChildren<Animator>();
+            sr = GetComponentInChildren<SpriteRenderer>();
+            trail = GetComponentInChildren<TrailRenderer>().gameObject.GetComponent<Transform>();
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Unity Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private void Awake()
-        {
-            // Setup singleton
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                instance = this;                
-            }
-
-            // Get required child components
-            sr = GetComponentInChildren<SpriteRenderer>();
-            trail = GetComponentInChildren<TrailRenderer>().gameObject.GetComponent<Transform>();
-            animator = GetComponentInChildren<Animator>();
-        }
-
-        //----------------------------------------
-        private void Start()
-        {
-            // Get input component reference
-            if (input == null)
-                input = GetComponent<BaseUserInput>();
-        }
-
-        //----------------------------------------
-        private void Update()
-        {
-            if (input.Clicked())
-            {
-                if (interactable != null)
-                {
-                    interactable.Interact();
-                    interactable = null;
-                }
-                else
-                {
-                    if (OnTargetMissed != null)
-                        OnTargetMissed.Invoke();
-                }
-            }
-        }
-
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        // OnTrigger
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         //----------------------------------------
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            interactable = collision.gameObject.GetComponent<BaseInteractable>();
-            if (interactable == null)
-                interactable = collision.gameObject.GetComponentInParent<BaseInteractable>();
+            target = collision.gameObject.GetComponentInParent<Target>();
         }
 
         //----------------------------------------
         private void OnTriggerExit2D(Collider2D collision)
         {
-            interactable = null;
+            target = null;
+        }
+
+        //----------------------------------------
+        private void Start()
+        {
+            GetReferences();
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Private Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private bool AttemptChangeDirection()
+
+        //----------------------------------------
+        private void FlipImage()
         {
-            int changeDirection = UnityEngine.Random.Range(0, 2);
+            sr.flipY = !sr.flipY;
 
-            if (changeDirection == 1)
-                return true;
-
-            return false;
+            Vector3 newPos = trail.localPosition;
+            newPos = new Vector3(newPos.x, newPos.y * -1f, newPos.z);
+            trail.localPosition = newPos;
         }
     }
 }

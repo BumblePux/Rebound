@@ -26,10 +26,10 @@ public static class Rebound_GPGSIds
 {
         public const string achievement_welcome_to_rebound = "CgkImqbwrIMTEAIQAg"; // <GPGSID>
         public const string achievement_getting_started = "CgkImqbwrIMTEAIQAw"; // <GPGSID>
-        public const string achievement_now_you_lose_more_time = "CgkImqbwrIMTEAIQBQ"; // <GPGSID>
         public const string achievement_you_cant_miss_now = "CgkImqbwrIMTEAIQBw"; // <GPGSID>
         public const string achievement_youre_still_going = "CgkImqbwrIMTEAIQBg"; // <GPGSID>
         public const string achievement_now_youre_getting_it = "CgkImqbwrIMTEAIQBA"; // <GPGSID>
+        public const string achievement_picking_up_the_pace = "CgkImqbwrIMTEAIQBQ"; // <GPGSID>
         public const string leaderboard_timed_mode = "CgkImqbwrIMTEAIQAQ"; // <GPGSID>
         public const string achievement_what_a_pro = "CgkImqbwrIMTEAIQCA"; // <GPGSID>
 

@@ -6,61 +6,38 @@
 //
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using BumblePux.Rebound.Audio;
 
 namespace BumblePux.Rebound.Interactables
 {
-    public class Target : BaseInteractable
+    public class Target : MonoBehaviour
     {
-        [Range(0, 120)]
-        public int moveLimit = 90;
-        public Sound onInteractedSound;
+        public Sound hitSound;
+        public GameObject explosionPrefab;
+        public Transform graphic;
 
-        public static Action OnTargetHit;
+        [Range(0, 120)]
+        public int moveAngle = 90;
 
         private Rigidbody2D rb2d;
         private Animator anim;
-
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        // Override Methods
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        public override void Interact()
-        {
-            MoveToRandomPosition();
-
-            // Play sound effect
-            if (onInteractedSound != null)
-                AudioManager.PlaySfx(onInteractedSound);
-
-            if (OnTargetHit != null)
-                OnTargetHit.Invoke();
-        }
-
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        // Unity Methods
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private void Awake()
-        {
-            rb2d = GetComponent<Rigidbody2D>();
-            anim = GetComponentInChildren<Animator>();
-        }
-
-        //----------------------------------------
-        private void OnEnable()
-        {
-            MoveToRandomPosition();
-        }
+        private GameObject particles;
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        public void ChangePosition()
+        {
+            AudioManager.PlaySfx(hitSound);
+            particles.transform.position = graphic.position;
+            particles.GetComponent<ParticleSystem>().Play();
+            MoveToRandomPosition();
+        }
+
         public void MoveToRandomPosition()
         {
-            int angle = (int)(rb2d.rotation - 180f) + UnityEngine.Random.Range(-moveLimit, moveLimit);
+            int angle = (int)(rb2d.rotation - 180f) + Random.Range(-moveAngle, moveAngle);
             rb2d.MoveRotation(angle);
             anim.Play("target_appear", -1, 0f);
         }
@@ -70,5 +47,16 @@ namespace BumblePux.Rebound.Interactables
         {
             anim.SetBool("hide", active);
         }
+
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        // Unity Methods
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        private void Awake()
+        {
+            rb2d = GetComponent<Rigidbody2D>();
+            anim = GetComponentInChildren<Animator>();
+
+            particles = Instantiate(explosionPrefab, graphic.position, Quaternion.identity);
+        }     
     }
 }

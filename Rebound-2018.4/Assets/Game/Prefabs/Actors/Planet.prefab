@@ -116,11 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c2067fa431484c9315593b89eb22e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb2d: {fileID: 410711887676426972}
   speed: 10
-  useMaxSpeed: 0
-  maxSpeed: 0
   direction: 0
-  lockSpeedChange: 0
 --- !u!114 &3751779032232540978
 MonoBehaviour:
   m_ObjectHideFlags: 0

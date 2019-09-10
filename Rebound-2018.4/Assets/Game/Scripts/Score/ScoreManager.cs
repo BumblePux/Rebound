@@ -6,10 +6,7 @@
 //
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 namespace BumblePux.Rebound.Score
 {
@@ -17,33 +14,29 @@ namespace BumblePux.Rebound.Score
     {
         private static ScoreManager instance;
 
-        public TMP_Text scoreText;
-        public Animator scoreAnimator;
+        public Int scoreData;
 
-        public static int Score { get; private set; }
-
+        public static int Score
+        {
+            get { return instance.scoreData.Value; }
+        }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         public static void IncreaseScore(int amount = 1)
         {
-            Score += amount;
-            instance.UpdateScoreText();
-            instance.PlayUpdateScoreAnimation();
+            if (instance == null) return;
+
+            instance.scoreData.Value += amount;            
         }
 
         //----------------------------------------
         public static void ResetScore()
         {
-            Score = 0;
-            instance.UpdateScoreText();
-        }
+            if (instance == null) return;
 
-        //----------------------------------------
-        public static void HideScoreDisplay(bool active)
-        {
-            instance.scoreAnimator.SetBool("hide", active);
+            instance.scoreData.Value = 0;
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,27 +46,9 @@ namespace BumblePux.Rebound.Score
         {
             // Setup singleton
             if (instance != null && instance != this)
-            {
                 Destroy(gameObject);
-            }
             else
-            {
                 instance = this;
-            }
-        }
-
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        // Unity Methods
-        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        private void UpdateScoreText()
-        {
-            scoreText.text = Score.ToString();            
-        }
-
-        //----------------------------------------
-        private void PlayUpdateScoreAnimation()
-        {
-            scoreAnimator.Play("scoreUI_appear", -1, 0.2f);
         }
     }
 }

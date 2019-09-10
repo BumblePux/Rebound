@@ -6,23 +6,27 @@
 //
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using BumblePux.Rebound.GPGServices;
+using UnityEngine.Advertisements;
 using BumblePux.Rebound.Audio;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 namespace BumblePux.Rebound.General
 {
     public class GameInitialization : MonoBehaviour
     {
+        public bool playGamesDebugEnabled = true;
+
         private void Start()
         {
             // Setup Google Play Games Services
-            GPGS.Initialize();
-            GPGS.SetPopupGravity(GooglePlayGames.BasicApi.Gravity.BOTTOM);
-            GPGS.SignIn();
+            InitializeGooglePlay();
+            SignIn();
+
+            // Setup Unity Ads Service
+            InitializeUnityAds();
 
             // Setup Audio preferences
             SetupMusicPreferences();
@@ -35,6 +39,37 @@ namespace BumblePux.Rebound.General
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Private Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        //----------------------------------------
+        private void InitializeGooglePlay()
+        {
+            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+                .EnableSavedGames() // enables saving game progress
+                .Build();
+
+            PlayGamesPlatform.InitializeInstance(config);
+            PlayGamesPlatform.DebugLogEnabled = playGamesDebugEnabled;   // recommended for debugging
+            PlayGamesPlatform.Activate();                               // activate the Google Play Games platform
+        }
+
+        //----------------------------------------
+        private void SignIn()
+        {
+            Social.localUser.Authenticate((bool success) =>
+            {
+                if (success)
+                    ((PlayGamesPlatform)Social.Active).SetGravityForPopups(Gravity.BOTTOM);
+            });
+        }
+
+        //----------------------------------------
+        private void InitializeUnityAds()
+        {
+            if (!Advertisement.isInitialized)
+                Advertisement.Initialize(AdsData.gameId, AdsData.testMode);
+        }
+
+        //----------------------------------------
         private void SetupMusicPreferences()
         {
             if (!PlayerPrefs.HasKey("IsMusicEnabled"))

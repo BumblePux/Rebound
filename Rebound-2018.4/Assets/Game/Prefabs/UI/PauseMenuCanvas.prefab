@@ -115,7 +115,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975010870404050790}
+      - m_Target: {fileID: 3538120224226256262}
         m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 975010870404050787}
   - component: {fileID: 975010870404050788}
   - component: {fileID: 975010870404050789}
-  - component: {fileID: 975010870404050790}
+  - component: {fileID: 3538120224226256262}
   m_Layer: 5
   m_Name: PauseMenuCanvas
   m_TagString: Untagged
@@ -189,7 +189,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &975010870404050787
 MonoBehaviour:
@@ -249,7 +249,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &975010870404050790
+--- !u!114 &3538120224226256262
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,19 +258,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 975010870404050792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1fca43f20cacc74da8b27dce8ddddd6, type: 3}
+  m_Script: {fileID: 11500000, guid: 813845807a2ad554e8e7e63f0a7e69b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSound: {fileID: 11400000, guid: f6ee6f47053b34b4c8b8aeeebaf37c91, type: 2}
-  animationWaitDuration: 1.5
-  pauseButtonPanel: {fileID: 975010872161901959}
-  pauseAnimator: {fileID: 975010870404050789}
-  sfxImage: {fileID: 975010870767425250}
-  sfxOn: {fileID: 21300000, guid: 3317d0f229b81dc489a2fea35bdf3aa1, type: 3}
-  sfxOff: {fileID: 21300000, guid: eaff6665aca6e9841beb4e43b2657dfe, type: 3}
   musicImage: {fileID: 975010871337286956}
-  musicOn: {fileID: 21300000, guid: c7c396be11f48fa40a5b0490456c1e8d, type: 3}
-  musicOff: {fileID: 21300000, guid: 85ead1956953efc47828b74680cb76c4, type: 3}
+  sfxImage: {fileID: 975010870767425250}
+  animator: {fileID: 975010870404050789}
 --- !u!1 &975010870591430870
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,8 +582,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975010870404050790}
-        m_MethodName: OnSfxSelected
+      - m_Target: {fileID: 3538120224226256262}
+        m_MethodName: ToggleSfx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -717,8 +710,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975010870404050790}
-        m_MethodName: RestartScene
+      - m_Target: {fileID: 3538120224226256262}
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -845,8 +838,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975010870404050790}
-        m_MethodName: OnMusicSelected
+      - m_Target: {fileID: 3538120224226256262}
+        m_MethodName: ToggleMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -973,7 +966,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975010870404050790}
+      - m_Target: {fileID: 3538120224226256262}
         m_MethodName: Pause
         m_Mode: 1
         m_Arguments:
@@ -1271,8 +1264,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 975010870404050790}
-        m_MethodName: LoadMainMenu
+      - m_Target: {fileID: 3538120224226256262}
+        m_MethodName: OpenMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

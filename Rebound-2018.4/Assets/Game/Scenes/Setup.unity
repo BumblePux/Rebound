@@ -334,17 +334,17 @@ PrefabInstance:
     - target: {fileID: 148942323283574028, guid: f73f1f0c5163f8544a206a0dcaeb7ffa,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 206.27498
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 148942323283574028, guid: f73f1f0c5163f8544a206a0dcaeb7ffa,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 368.95773
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 148942323283574028, guid: f73f1f0c5163f8544a206a0dcaeb7ffa,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.773861
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 148942323283574028, guid: f73f1f0c5163f8544a206a0dcaeb7ffa,
         type: 3}
@@ -384,6 +384,11 @@ PrefabInstance:
     - target: {fileID: 148942323283574028, guid: f73f1f0c5163f8544a206a0dcaeb7ffa,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 148942323283574031, guid: f73f1f0c5163f8544a206a0dcaeb7ffa,
+        type: 3}
+      propertyPath: playGamesDebugEnabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
