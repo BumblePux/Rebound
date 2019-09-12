@@ -14,7 +14,8 @@ namespace BumblePux.Rebound.UI
     public class CountdownUI : MonoBehaviour
     {
         public Float countdownData;
-        public TMP_Text countdownText;
+        public TMP_Text minutesText;
+        public TMP_Text secondsText;
         public static Animator animator;
 
         private void Start()
@@ -32,7 +33,8 @@ namespace BumblePux.Rebound.UI
             float minutes = Mathf.Floor(countdownData.Value / 60f);
             float seconds = countdownData.Value % 60f;
 
-            countdownText.text = minutes.ToString("00") + ":" + seconds.ToString("00.00");
+            minutesText.text = minutes.ToString("00");
+            secondsText.text = seconds.ToString("00.00");
         }
 
         public static void PlayUpdateAnimation()

@@ -21,7 +21,7 @@ namespace BumblePux.Rebound.GameControllers
 {
     public class TimedMode : MonoBehaviour, IUnityAdsListener
     {
-        private static bool isGameOver;
+        public static bool isGameOver;
 
         [Header("Audio")]
         public Sound timedModeAudio;

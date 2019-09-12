@@ -10,6 +10,7 @@ using UnityEngine;
 using BumblePux.Rebound.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using BumblePux.Rebound.GameControllers;
 
 namespace BumblePux.Rebound.UI
 {
@@ -24,6 +25,8 @@ namespace BumblePux.Rebound.UI
         //----------------------------------------
         public void Pause()
         {
+            if (TimedMode.isGameOver) return;
+
             Time.timeScale = 0f;
             isPaused = true;
 
