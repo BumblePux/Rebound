@@ -33,7 +33,9 @@ namespace BumblePux.Rebound.General
             SetupSfxPreferences();
 
             // Load Main Menu
-            SceneManager.LoadScene("MainMenu");
+//#if UNITY_EDITOR
+//            SceneManager.LoadScene("MainMenu");
+//#endif
         }
 
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -59,6 +61,9 @@ namespace BumblePux.Rebound.General
             {
                 if (success)
                     ((PlayGamesPlatform)Social.Active).SetGravityForPopups(Gravity.BOTTOM);
+
+                // Load main menu, regardless of whether we successfully signed in or not.
+                SceneManager.LoadScene("MainMenu");
             });
         }
 

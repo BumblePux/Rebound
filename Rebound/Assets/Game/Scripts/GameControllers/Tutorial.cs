@@ -31,11 +31,11 @@ namespace BumblePux.Rebound.GameControllers
         private bool triggered;
         private bool tutorialFinished;
 
-        private void Start()
+        private IEnumerator Start()
         {
             input = GetComponent<BaseUserInput>();
             AudioManager.CrossFade(tutorialAudio);
-            StartCoroutine(WaitToStartDialogue());
+            yield return StartCoroutine(WaitToStartDialogue());
         }
 
         private void Update()

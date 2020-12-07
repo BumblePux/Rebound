@@ -20,6 +20,7 @@ namespace BumblePux.Rebound.Dialogue
 
         public TMP_Text dialogueText;
         public Animator animator;
+        public float characterDelay = 0.05f;
         public UnityEvent OnEndDialogue;
 
         private Queue<string> sentences = new Queue<string>();
@@ -67,7 +68,7 @@ namespace BumblePux.Rebound.Dialogue
             foreach (char letter in sentence.ToCharArray())
             {
                 dialogueText.text += letter;
-                yield return null;
+                yield return new WaitForSeconds(characterDelay);
             }
         }
 
