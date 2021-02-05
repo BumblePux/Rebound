@@ -6,5 +6,4 @@ The released game can be played on Android devices here: https://play.google.com
 
 ## Images
 <img src="Art/Android_Feature_Graphic.png" width="50%">
-![](<img src="Art/App-Store-Images/main-menu.jpg" width="20%">) ![](<img src="Art/App-Store-Images/popped-void.jpg" width="20%">)
-<img src="Art/App-Store-Images/time-started.jpg" width="20%">
+| <img src="Art/App-Store-Images/main-menu.jpg" width="20%"> | <img src="Art/App-Store-Images/popped-void.jpg" width="20%"> | <img src="Art/App-Store-Images/time-started.jpg" width="20%"> |
