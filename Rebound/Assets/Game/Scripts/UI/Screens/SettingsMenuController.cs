@@ -29,6 +29,8 @@ namespace BumblePux.Rebound.UI
         public Sprite musicOn;
         public Sprite musicOff;
 
+        private const string privacyPolicyUrl = "https://sites.google.com/view/bumblepux/games/rebound-privacy-policy?authuser=1";
+
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         // Public Methods
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -68,7 +70,7 @@ namespace BumblePux.Rebound.UI
         //----------------------------------------
         public void OpenPrivacyPolicy()
         {
-            Application.OpenURL("https://unity3d.com/legal/privacy-policy");
+            Application.OpenURL(privacyPolicyUrl);
         }
 
         //----------------------------------------

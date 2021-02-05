@@ -404,7 +404,7 @@ PrefabInstance:
     - target: {fileID: 8860198514909103284, guid: bdbe062dd4c3d7a4d92f9e634a4f6353,
         type: 3}
       propertyPath: m_text
-      value: V1.1
+      value: V1.1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8860198514909103284, guid: bdbe062dd4c3d7a4d92f9e634a4f6353,
         type: 3}
@@ -414,12 +414,12 @@ PrefabInstance:
     - target: {fileID: 8860198514909103284, guid: bdbe062dd4c3d7a4d92f9e634a4f6353,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8860198514909103284, guid: bdbe062dd4c3d7a4d92f9e634a4f6353,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8860198515661379363, guid: bdbe062dd4c3d7a4d92f9e634a4f6353,
         type: 3}
